@@ -1,6 +1,7 @@
 package me.zink.useflessLibrary;
 
 import lombok.Getter;
+import me.zink.useflessLibrary.event.EventListeners;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class UseflessLibrary extends JavaPlugin {
@@ -9,15 +10,15 @@ public final class UseflessLibrary extends JavaPlugin {
     @Getter
     private static JavaPlugin plugin;
 
-    /*@Override
+    @Override
     public void onEnable() {
-        // Plugin startup logic
+        getServer().getPluginManager().registerEvents(new EventListeners(), plugin);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-    }*/
+    }
 
     // This method must not be used anywhere in the library!
     public static void setPlugin(final JavaPlugin plugin) {

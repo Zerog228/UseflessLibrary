@@ -1,5 +1,6 @@
 package me.zink.useflessLibrary.item;
 
+import me.zink.useflessLibrary.UseflessLibrary;
 import me.zink.useflessLibrary.data.PersistentData;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.Listener;
@@ -19,7 +20,10 @@ public abstract class CItem implements Listener {
     public final NamespacedKey namespaceKey;
     public final ItemStack stack;
 
-    public CItem(String itemKey, Plugin plugin) {
+    /**
+     * Creates custom item with defined item key
+     * */
+    public CItem(String itemKey) {
         stack = initItem(itemKey);
 
         //Set model data and tag
@@ -27,12 +31,12 @@ public abstract class CItem implements Listener {
         stack.setItemMeta((ItemMeta) PersistentData.setData(stack.getItemMeta(), CITEM_TAG, itemKey));
 
         initRecipe();
-        getServer().getPluginManager().registerEvents(this, plugin);
-        this.namespaceKey = new NamespacedKey(plugin, itemKey);
+        getServer().getPluginManager().registerEvents(this, UseflessLibrary.getPlugin());
+        this.namespaceKey = new NamespacedKey(UseflessLibrary.getPlugin(), itemKey);
     }
 
-    public CItem(String itemKey, Plugin plugin, List<CItem> list) {
-        this(itemKey, plugin);
+    public CItem(String itemKey, List<CItem> list) {
+        this(itemKey);
         list.add(this);
     }
 
