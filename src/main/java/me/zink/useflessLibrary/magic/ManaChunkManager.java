@@ -12,22 +12,22 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ManaChunkManager {
 
-    private static final int DEF_MANA = 100, DEF_ANTI_MANA = 10;
-    private static final String MANA_KEY = "mana", ANTI_MANA_KEY = "anti_mana", GENERATED_MANA_KEY = "mana_generated", CHUNK_MANA_UPDATED_KEY = "chunk_m_upd";
-    private static final int[][] NEIGHBOUR_CHUNK_CORDS = new int[][]{
+    protected static final int DEF_MANA = 100, DEF_ANTI_MANA = 10;
+    protected static final String MANA_KEY = "mana", ANTI_MANA_KEY = "anti_mana", GENERATED_MANA_KEY = "mana_generated", CHUNK_MANA_UPDATED_KEY = "chunk_m_upd";
+    protected static final int[][] NEIGHBOUR_CHUNK_CORDS = new int[][]{
             {-1, -1}, {-1, 0}, {-1, 1},
             {0,  -1},          { 0, 1},
             {1,  -1}, { 1, 0}, { 1, 1}
     };
     //Mana flow chunk operation indexes
-    private static final int REC_M = 0, GIV_M = 1, REC_A = 2, GIV_A = 3, X_I = 0, Z_I = 1, UPDATED = 2;
+    protected static final int REC_M = 0, GIV_M = 1, REC_A = 2, GIV_A = 3, X_I = 0, Z_I = 1, UPDATED = 2;
     //Chunk key -> mana/a-mana
 
-    private static final ConcurrentHashMap<World, Map<Long, TPair<Float, Float>>> mana_buses = new ConcurrentHashMap<>();
-    private static final Random rand = new Random();
+    protected static final ConcurrentHashMap<World, Map<Long, TPair<Float, Float>>> mana_buses = new ConcurrentHashMap<>();
+    protected static final Random rand = new Random();
 
     //TODO Check if "isChunkLoaded()" is really needed
-    private static boolean ifSafeForOperations(World world, int x, int z){
+    protected static boolean ifSafeForOperations(World world, int x, int z){
         return world.isChunkLoaded(x, z) && world.isChunkGenerated(x, z);
     }
 
@@ -43,11 +43,11 @@ public class ManaChunkManager {
         return false;
     }
 
-    private static void flagChunkManaUpdated(Chunk chunk){
+    protected static void flagChunkManaUpdated(Chunk chunk){
         PersistentData.setData(chunk, CHUNK_MANA_UPDATED_KEY, "upd");
     }
 
-    private static void unflagChunkManaUpdated(Chunk chunk){
+    protected static void unflagChunkManaUpdated(Chunk chunk){
         PersistentData.removeData(chunk, CHUNK_MANA_UPDATED_KEY);
     }
 
@@ -83,7 +83,7 @@ public class ManaChunkManager {
         genMana(chunk);
     }
 
-    private static void genMana(Chunk chunk){
+    protected static void genMana(Chunk chunk){
         removeChunkFromBus(chunk);
         Biome biome = chunk.getBlock(5, 100, 5).getBiome();
 
@@ -95,7 +95,7 @@ public class ManaChunkManager {
     }
 
     /**Generates chunk with average between default random and defined values*/
-    private static void genMana(Chunk chunk, float mana, float antiMana){
+    protected static void genMana(Chunk chunk, float mana, float antiMana){
         genMana(chunk);
         setMana(chunk, (getMana(chunk) + mana) / 2);
         setAntiMana(chunk, (getAntiMana(chunk) + antiMana) / 2);
@@ -116,7 +116,7 @@ public class ManaChunkManager {
         return sum + getMana(chunk);
     }
 
-    private static float getMana(Chunk chunk){
+    protected static float getMana(Chunk chunk){
         if(!PersistentData.hasData(chunk, GENERATED_MANA_KEY)){
             genManaFromNeighbours(chunk);
         }
@@ -146,7 +146,7 @@ public class ManaChunkManager {
         return sum + getAntiMana(chunk);
     }
 
-    private static float getAntiMana(Chunk chunk){
+    protected static float getAntiMana(Chunk chunk){
         if(!PersistentData.hasData(chunk, GENERATED_MANA_KEY)){
             genManaFromNeighbours(chunk);
         }
@@ -161,7 +161,7 @@ public class ManaChunkManager {
         }
     }
 
-    private static void addMana(Chunk chunk, float mana){
+    protected static void addMana(Chunk chunk, float mana){
         if(!PersistentData.hasData(chunk, GENERATED_MANA_KEY)){
             genManaFromNeighbours(chunk);
         }
@@ -189,7 +189,7 @@ public class ManaChunkManager {
         mana_buses.put(chunk.getWorld(), chunk_to_updates);
     }
 
-    private static void addAntiMana(Chunk chunk, float antiMana){
+    protected static void addAntiMana(Chunk chunk, float antiMana){
         if(!PersistentData.hasData(chunk, GENERATED_MANA_KEY)){
             genManaFromNeighbours(chunk);
         }
@@ -217,7 +217,7 @@ public class ManaChunkManager {
         mana_buses.put(chunk.getWorld(), chunk_to_updates);
     }
 
-    private static void setMana(Chunk chunk, float mana){
+    protected static void setMana(Chunk chunk, float mana){
         if(!PersistentData.hasData(chunk, GENERATED_MANA_KEY)){
             genManaFromNeighbours(chunk);
         }
@@ -228,7 +228,7 @@ public class ManaChunkManager {
         removeChunkFromBus(chunk);
     }
 
-    private static void removeChunkFromBus(Chunk chunk){
+    protected static void removeChunkFromBus(Chunk chunk){
         try{
             Map<Long, TPair<Float, Float>> chunk_to_updates = mana_buses.get(chunk.getWorld());
             if(chunk_to_updates == null){
@@ -242,7 +242,7 @@ public class ManaChunkManager {
         }
     }
 
-    private static void setAntiMana(Chunk chunk, float antiMana){
+    protected static void setAntiMana(Chunk chunk, float antiMana){
         if(!PersistentData.hasData(chunk, GENERATED_MANA_KEY)){
             genManaFromNeighbours(chunk);
         }
@@ -253,7 +253,7 @@ public class ManaChunkManager {
         clearAntiManaFromBus(chunk);
     }
 
-    private static void clearAntiManaFromBus(Chunk chunk){
+    protected static void clearAntiManaFromBus(Chunk chunk){
         try{
             Map<Long, TPair<Float, Float>> chunk_to_updates = mana_buses.get(chunk.getWorld());
             if(chunk_to_updates == null){
@@ -341,7 +341,7 @@ public class ManaChunkManager {
         }
     }
 
-    private static boolean fillFlowOperations(Chunk chunk, int[][] operations, float min_mana_diff, float min_anti_mana_diff){
+    protected static boolean fillFlowOperations(Chunk chunk, int[][] operations, float min_mana_diff, float min_anti_mana_diff){
         float min_mana, max_mana, min_anti_mana, max_anti_mana, curr_mana, curr_anti_mana;
         Chunk neighbour;
         min_mana = max_mana = getMana(chunk);
@@ -398,7 +398,7 @@ public class ManaChunkManager {
         return updated;
     }
 
-    private static void fireFlowOperations(Chunk chunk, int[][] operations, float mana_eff, float anti_mana_eff){
+    protected static void fireFlowOperations(Chunk chunk, int[][] operations, float mana_eff, float anti_mana_eff){
         Chunk neighbour;
         float mana_diff;
         //Receive mana from neighbour
