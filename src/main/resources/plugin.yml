@@ -1,0 +1,6 @@
+name: Usefless Library
+version: '1.0'
+main: me.zink.useflessLibrary.UseflessLibrary
+api-version: '1.21'
+authors: [ Zerog228, ErRoR_SINNER, eric_sx ]
+description: It's extremely useless! I swear!
