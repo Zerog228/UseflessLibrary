@@ -1,7 +1,7 @@
 # **Library with many random things for Minecraft Plugin development!**
 
 ## **You will need to initialize this library in your "onEnable()" method in "Plugin.java"**
-```
+```Java
 @Override
 public void onEnable() {
     UseflessLibrary.setPlugin(this);
@@ -12,7 +12,7 @@ public void onEnable() {
 - ### Persistent data/meta container wrapper
 
 Instead of writing *this* for setting data
-```
+```Java
 ItemMeta meta = container.getItemMeta();
 PersistentDataContainer container = meta.getPersistentDataContainer();
 container.set(new NamespacedKey(YourPlugin.getPlugin(), KEY), PersistentDataType.TYPE, value);
@@ -23,7 +23,7 @@ or *this* for checking data <br/>
 `blueprintStack.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(YourPlugin.getPlugin(), KEY));`
 
 you can use built-in class '*PersistentData*':
-```
+```Java
 itemstack.setItemMeta((ItemMeta) PersistentData.setData(itemstack.getItemMeta(), KEY, value)); //Setting data
 PersistentData.getDataS(stack.getItemMeta(), KEY); //Getting data
 PersistentData.hasData(stack.getItemMeta(), KEY); //Check if it has data
@@ -35,7 +35,7 @@ It also works with every PersistentDataHolder (Entities, Chunks, Items etc.)
 You can register custom items just like in mods with 3 easy steps:
 
 1. Create class with your custom item registries where you will register your item:
-```
+```Java
 public class CustomItemRegistries {
     public static CItem customItem;
 
@@ -45,7 +45,7 @@ public class CustomItemRegistries {
 }
 ```
 2. Create CustomItem class that extends CItem. Because 'CItem' implements EventListener, we can also add "onClick" event:
-```
+```Java
 public class CustomItem extends CItem {
 
     public CustomItem(String namespaceKey) {
@@ -80,7 +80,7 @@ public class CustomItem extends CItem {
 }
 ```
 3. Initialize item registries class in your "onEnable()" method right after initializing library
-```
+```Java
 @Override
 public void onEnable() {
     UseflessLibrary.setPlugin(this);
