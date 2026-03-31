@@ -3,7 +3,6 @@ package me.zink.useflessLibrary.gui;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,20 +10,20 @@ import java.util.Map;
 public class CGUI extends CPrimitiveGUI {
     protected final Map<Integer, CButton> buttons = new HashMap<>();
 
-    public CGUI(Plugin plugin, FixedSize size) {
-        super(plugin, size);
+    public CGUI(FixedSize size) {
+        super(size);
     }
 
-    public CGUI(Plugin plugin, int size) {
-        super(plugin, size);
+    public CGUI(int size) {
+        super(size);
     }
 
-    public CGUI(Plugin plugin, FixedSize size, Component title) {
-        super(plugin, size, title);
+    public CGUI(FixedSize size, Component title) {
+        super(size, title);
     }
 
-    public CGUI(Plugin plugin, int size, Component title) {
-        super(plugin, size, title);
+    public CGUI(int size, Component title) {
+        super(size, title);
     }
 
     @Override

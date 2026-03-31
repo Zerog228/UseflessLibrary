@@ -2,6 +2,7 @@ package me.zink.useflessLibrary.gui;
 
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import lombok.Getter;
+import me.zink.useflessLibrary.UseflessLibrary;
 import me.zink.useflessLibrary.data.PersistentData;
 import me.zink.useflessLibrary.item.CStackCreator;
 import net.kyori.adventure.text.Component;
@@ -12,10 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -29,26 +28,26 @@ public abstract class CPrimitiveGUI implements InventoryHolder, Listener {
     protected final Map<Integer, CPrimitiveButton> buttons = new HashMap<>();
     private ItemStack DEF_EMPTY;
 
-    public CPrimitiveGUI(Plugin plugin, FixedSize size) {
-        this(plugin, size.getSize(), Component.empty());
+    public CPrimitiveGUI(FixedSize size) {
+        this(size.getSize(), Component.empty());
     }
 
-    public CPrimitiveGUI(Plugin plugin, int size) {
-        this(plugin, size, Component.empty());
+    public CPrimitiveGUI(int size) {
+        this(size, Component.empty());
     }
 
-    public CPrimitiveGUI(Plugin plugin, FixedSize size, Component title) {
-        this(plugin, size.getSize(), title);
+    public CPrimitiveGUI(FixedSize size, Component title) {
+        this(size.getSize(), title);
     }
 
-    public CPrimitiveGUI(Plugin plugin, int size, Component title) {
-        this.inventory = plugin.getServer().createInventory(this, size, title);
+    public CPrimitiveGUI(int size, Component title) {
+        this.inventory = UseflessLibrary.getPlugin().getServer().createInventory(this, size, title);
 
         createDefaultEmpty("", Material.GRAY_STAINED_GLASS_PANE);
         prefillGui(size);
         registerButtons();
 
-        Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
+        Bukkit.getServer().getPluginManager().registerEvents(this, UseflessLibrary.getPlugin());
     }
 
     /**
