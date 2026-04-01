@@ -4,7 +4,7 @@
   <groupId>io.github.zerog228</groupId>
   <artifactId>UseflessLibrary</artifactId>
   <name>UseflessLibrary</name>
-  <version>1.1</version>
+  <version>1.0.0</version>
   <description>Library for many useful (or not) features
         for paper plugin development.</description>
   <url>https://github.com/Zerog228</url>
