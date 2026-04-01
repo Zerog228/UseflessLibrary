@@ -6,7 +6,7 @@
 
     <groupId>io.github.zerog228</groupId>
     <artifactId>UseflessLibrary</artifactId>
-    <version>1.1</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>UseflessLibrary</name>

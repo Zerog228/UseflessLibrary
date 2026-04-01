@@ -1,6 +1,6 @@
-name: UseflessLibrary
-version: '1.1'
-main: me.zink.UseflessLibrary.UseflessLibrary
+name: usefless
+version: '1.0.0'
+main: io.github.zerog228.usefless.UseflessLibrary
 api-version: '1.21'
-authors: [ zink, ErRoR_SINNER, eric_sx ]
-description: It's extremely useless! I swear!
+authors: [ zerog228, ErRoR_SINNER, eric_sx ]
+description: It's extremely useful! I swear!
