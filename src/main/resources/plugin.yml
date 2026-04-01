@@ -1,5 +1,5 @@
 name: UseflessLibrary
-version: '1.0'
+version: '1.1'
 main: me.zink.UseflessLibrary.UseflessLibrary
 api-version: '1.21'
 authors: [ zink, ErRoR_SINNER, eric_sx ]
