@@ -87,4 +87,10 @@ public void onEnable() {
     CustomItemRegistries.register();
 }
 ```
+<img width="1060" height="203" alt="image" src="https://github.com/user-attachments/assets/c731dc24-c6b1-4f1c-bc52-57a389a2d68a" />
+
 Voilà!
+
+
+- ### Custom structures
+You can register custom structures (GUIDE W.I.P.)
