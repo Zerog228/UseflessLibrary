@@ -12,7 +12,7 @@ public final class UseflessLibrary extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(new EventListeners(), plugin);
+
     }
 
     @Override
@@ -23,5 +23,6 @@ public final class UseflessLibrary extends JavaPlugin {
     // This method must not be used anywhere in the library!
     public static void setPlugin(final JavaPlugin plugin) {
         UseflessLibrary.plugin = plugin;
+        plugin.getServer().getPluginManager().registerEvents(new EventListeners(), plugin);
     }
 }
