@@ -136,7 +136,7 @@ public class CStructure {
     /**
      * Converts nbt compound to an array of blocks
      * @param structureCompound Compound taken from .nbt file
-     * @param ignoreData Will block properties from NBT scheme be ignored or not
+     * @param ignoreData Will block properties from NBT scheme be ignored or not (Like block facing direction or rotation)
      * */
     private static BlockData[][][] nbtToBlockArray(NBTCompound structureCompound, boolean ignoreData) throws Exception{
         //Init structure size
@@ -171,7 +171,7 @@ public class CStructure {
     /**
      * Initializes all structures from given path and puts them in structure map
      * @param path Path in which structures are located
-     * @param ignoreData Should properties of the blocks in the structure be ignored
+     * @param ignoreData Should properties of the blocks in the structure be ignored (Like block facing direction or rotation)
      * @param deapSearch Should it also search in subfolders or not
      * */
     public static void initAllFromPath(Path path, boolean ignoreData, boolean deapSearch){
@@ -191,7 +191,7 @@ public class CStructure {
     /**
      * Initializes structure from given path and puts it in structure map
      * @param path Path in which structures are located
-     * @param ignoreData Should properties of the blocks in the structure be ignored
+     * @param ignoreData Should properties of the blocks in the structure be ignored (Like block facing direction or rotation)
      * */
     public static void initStructure(Path path, boolean ignoreData){
         File structureFile = path.toFile();
@@ -224,7 +224,7 @@ public class CStructure {
      * @param structureArray Structure to be compared
      * @param reference Name of the .nbt reference file (For now should explicitly be with .nbt extension!)
      * @param size Dimensions of our structure
-     * @param ignoreData Should data of individual blocks be ignored or not (Comparison only by material)
+     * @param ignoreData Should data of individual blocks be ignored or not (Comparison only by material ignoring block properties)
      * @param ignoreAir Should air blocks be skipped when comparing structures
      * */
     public static boolean compare(BlockData[][][] structureArray, String reference, Vector2i size, boolean ignoreData, boolean ignoreAir){

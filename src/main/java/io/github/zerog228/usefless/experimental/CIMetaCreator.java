@@ -11,7 +11,7 @@ public class CIMetaCreator{
 
     public static class Builder<Meta extends ItemMeta>{
 
-        private final Meta itemMeta;
+        protected final Meta itemMeta;
 
         public Builder(Meta itemMeta){
             this.itemMeta = itemMeta;

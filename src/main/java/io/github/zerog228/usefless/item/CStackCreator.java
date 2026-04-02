@@ -1,16 +1,24 @@
 package io.github.zerog228.usefless.item;
 
+import io.papermc.paper.datacomponent.DataComponentType;
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import io.papermc.paper.datacomponent.item.CustomModelData;
-import io.papermc.paper.datacomponent.item.ItemLore;
-import io.papermc.paper.datacomponent.item.TooltipDisplay;
+import io.papermc.paper.datacomponent.item.*;
 import io.github.zerog228.usefless.UseflessLibrary;
 import io.github.zerog228.usefless.data.PersistentData;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.keys.tags.BlockTypeTagKeys;
+import io.papermc.paper.registry.tag.TagKey;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.Namespaced;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
+import net.kyori.adventure.util.TriState;
+import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.block.BlockType;
 import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -45,7 +53,7 @@ public class CStackCreator {
 
     public static class Builder{
 
-        private ItemStack itemStack;
+        protected ItemStack itemStack;
 
         public Builder(ItemStack itemStack){
             this.itemStack = itemStack;
@@ -164,6 +172,88 @@ public class CStackCreator {
 
         public static void customModelData(ItemStack stack, String model){
             stack.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addString(model).build());
+        }
+
+        public Builder itemModel(String model){
+            itemStack.setData(DataComponentTypes.ITEM_MODEL, Key.key(model));
+            return this;
+        }
+
+        public Builder itemModel(String namespace, String value){
+            itemStack.setData(DataComponentTypes.ITEM_MODEL, Key.key(namespace, value));
+            return this;
+        }
+
+        public Builder dyedColor(Color color){
+            itemStack.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor(color));
+            return this;
+        }
+
+        public Builder tool(Tool tool){
+            itemStack.setData(DataComponentTypes.TOOL, tool);
+            return this;
+        }
+
+        public Builder tool(DefaultTool tool, float mining_speed){
+            itemStack.setData(DataComponentTypes.TOOL, tool.getTool(mining_speed));
+            return this;
+        }
+
+        public Builder damage(int damage){
+            itemStack.setData(DataComponentTypes.DAMAGE, damage);
+            return this;
+        }
+
+        public Builder maxDamage(int max_damage){
+            itemStack.setData(DataComponentTypes.MAX_DAMAGE, max_damage);
+            return this;
+        }
+
+        public Builder attackRange(AttackRange range){
+            itemStack.setData(DataComponentTypes.ATTACK_RANGE, range);
+            return this;
+        }
+
+        public Builder attackRange(float range){
+            itemStack.setData(DataComponentTypes.ATTACK_RANGE, AttackRange.attackRange().maxReach(range).build());
+            return this;
+        }
+
+        public Builder remove(DataComponentType dataComponentType){
+            itemStack.unsetData(dataComponentType);
+            return this;
+        }
+
+        public Builder remove(DataComponentType ... dataComponentTypes){
+            for(DataComponentType type : dataComponentTypes){
+                itemStack.unsetData(type);
+            }
+            return this;
+        }
+    }
+
+    public enum DefaultTool{
+        PICKAXE(BlockTypeTagKeys.MINEABLE_PICKAXE),
+        AXE(BlockTypeTagKeys.MINEABLE_AXE),
+        HOE(BlockTypeTagKeys.MINEABLE_HOE),
+        SHOVEL(BlockTypeTagKeys.MINEABLE_SHOVEL),
+        SWORD(BlockTypeTagKeys.SWORD_EFFICIENT);
+
+        private TagKey<BlockType> tagKey;
+        DefaultTool(TagKey<BlockType> tagKey){
+            this.tagKey = tagKey;
+        }
+
+        public Tool getTool(float speed){
+            return Tool.tool().addRule(
+                    Tool.rule(
+                            RegistryAccess.registryAccess()
+                                    .getRegistry(RegistryKey.BLOCK)
+                                    .getTag(tagKey),
+                            speed,
+                            TriState.TRUE
+                    )
+            ).build();
         }
     }
 
