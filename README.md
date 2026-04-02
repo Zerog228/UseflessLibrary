@@ -1,7 +1,7 @@
 # **Library with many random things for Minecraft Plugin development!**
 
 **Maven dependency:**
-```
+```xml
 <dependency>
     <groupId>io.github.zerog228</groupId>
     <artifactId>UseflessLibrary</artifactId>
@@ -21,6 +21,9 @@ public void onEnable() {
 - [PersistentData](#persistent-data-meta-container-wrapper)
 - [Custom Items](#custom-item-registy)
 - [Custom Structures](#custom-structures)
+
+# **Showcase-Plugins**
+- [Ave Maria](https://github.com/Zerog228/AveMaria)
 
 
 # Persistent data-meta container wrapper
