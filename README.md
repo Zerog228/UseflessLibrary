@@ -1,5 +1,14 @@
 # **Library with many random things for Minecraft Plugin development!**
 
+**Maven dependency:**
+```
+<dependency>
+    <groupId>io.github.zerog228</groupId>
+    <artifactId>UseflessLibrary</artifactId>
+    <version>1.0.3</version>
+</dependency>
+```
+
 ## **You will need to initialize this library in your "onEnable()" method in "Plugin.java"**
 ```Java
 @Override
