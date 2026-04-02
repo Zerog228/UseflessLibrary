@@ -17,9 +17,13 @@ public void onEnable() {
 }
 ```
 
-## **Most useful things:**
-- ### Persistent data/meta container wrapper
+# **Table of contents**
+- [PersistentData](#persistent-data-meta-container-wrapper)
+- [Custom Items](#custom-item-registy)
+- [Custom Structures](#custom-structures)
 
+
+# Persistent data-meta container wrapper
 Instead of writing *this* for setting data
 ```Java
 ItemMeta meta = container.getItemMeta();
@@ -40,7 +44,7 @@ PersistentData.hasData(stack.getItemMeta(), KEY); //Check if it has data
 It also works with every PersistentDataHolder (Entities, Chunks, Items etc.)
 
 
-- ### Custom item registy
+# Custom item registy
 You can register custom items just like in mods with 3 easy steps:
 
 1. Create class with your custom item registries where you will register your item:
@@ -101,5 +105,83 @@ public void onEnable() {
 Voilà!
 
 
-- ### Custom structures
-You can register custom structures (GUIDE W.I.P.)
+# Custom structures
+To register custom structure you will need to follow this steps:
+1. Build structure in world and save it using structure blocks
+<img width="1295" height="970" alt="image" src="https://github.com/user-attachments/assets/68b6d661-d699-4ce8-8a71-d53807aee8fe" />
+
+2. Create folder in the "resources" path and place your structure here
+<img width="1010" height="243" alt="image" src="https://github.com/user-attachments/assets/5e9ff450-8487-45f2-8681-1865bbd82bff" />
+
+3. Place your structure in your plugin subfolder in "server/your_plugin" and register it in "onEnable()" method using CStructure.init() </br>
+You can do all of this automatically using following code:
+```Java
+    @Override
+    public void onEnable() {
+        plugin = this;
+        UseflessLibrary.setPlugin(plugin);
+
+        //Registering items
+        CustomItemRegistries.init();
+
+        //This line of code automatically copies all files from "resources/structures/" to "server/plugins/your_plugin/structures/"
+        CFileUtils.copyResources(plugin, "structures", "structures", 1, false);
+        //This line of code automatically initializes all structures from "server/plugins/your_plugin/structures/"
+        CStructure.initAllFromPath(Path.of(plugin.getDataPath().toString(), "structures"), true, true);
+    }
+```
+
+!!! **NOTE THAT YOU WILL NEED TO DISABLE FILTERING IF YOU PLACE ANYTHING IN "RESOURCE" FOLDER** !!! </br>
+!!! **FILES WILL BE MALFORMED IF YOU WON'T DO THAT** </br>
+<img width="456" height="144" alt="image" src="https://github.com/user-attachments/assets/703cca10-719e-4727-ab5f-a5122f58c86b" />
+
+4. Best practice in this step would be creating separate "MegaCrafterLogic" class where all related to structure logic will be located and registering it in the "onClick" event listener </br>
+You can also register event listener inside this class, but don't forget to initialize it in "onEnable()" method
+```Java
+public class MegaCrafterLogic implements Listener {
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent e){
+        if(e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.BEACON){
+            //Checking if it's our structure
+            if(checkStructure(e.getClickedBlock())){
+                e.setCancelled(true); //Cancel block clock event
+                e.getPlayer().sendMessage("Clicked on structure!");
+            }
+        }
+    }
+
+    private static boolean checkStructure(Block block){
+        //Creating zone where structure could be located
+        Zone zone = new Zone(block.getRelative(-2, -1, -2), block.getRelative(2, 2, 2));
+
+        //Comparing our zone with reference
+        return CStructureHelper.compare(block, zone, "mega_crafter.nbt", true, true);
+    }
+}
+```
+
+Registering event listener in the "onEnable()" method
+```Java
+    @Override
+    public void onEnable() {
+        plugin = this;
+        UseflessLibrary.setPlugin(plugin);
+
+        //Registering items
+        CustomItemRegistries.init();
+
+        //This line of code automatically copies all files from "resources/structures/" to "server/plugins/your_plugin/structures/"
+        CFileUtils.copyResources(plugin, "structures", "structures", 1, false);
+        //This line of code automatically initializes all structures from "server/plugins/your_plugin/structures/"
+        CStructure.initAllFromPath(Path.of(plugin.getDataPath().toString(), "structures"), true, true);
+
+        //Registering our custom event listener from MegaCrafter
+        plugin.getServer().getPluginManager().registerEvents(new MegaCrafterLogic(), plugin);
+    }
+```
+<img width="1416" height="911" alt="image" src="https://github.com/user-attachments/assets/7625aebe-4d06-4a0a-a8f2-cb947fdf12dc" />
+Voilà!
+
+
+# Custom GUI (Guide W.I.P.)
