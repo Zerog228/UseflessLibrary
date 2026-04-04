@@ -1,5 +1,6 @@
 package io.github.zerog228.usefless.config;
 
+import lombok.Getter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -8,8 +9,9 @@ import java.io.File;
 
 public class CConfig {
 
+    @Getter
     protected final File file;
-    protected YamlConfiguration config;
+    protected FileConfiguration config;
 
     /**
      * Create an instance of a config.
