@@ -8,8 +8,8 @@ import java.io.File;
 
 public class CConfig {
 
-    private final File file;
-    private FileConfiguration config;
+    protected final File file;
+    protected YamlConfiguration config;
 
     /**
      * Create an instance of a config.
@@ -31,8 +31,8 @@ public class CConfig {
             try{
                 file.createNewFile();
                 config = YamlConfiguration.loadConfiguration(file);
-            }catch (Exception ignored){
-                System.err.println("Exception on creating new file with path "+file.getPath()+"!");
+            }catch (Exception exception){
+                System.err.println("Exception on creating new file with path "+file.getPath()+"! "+exception.getMessage());
             }
         }
     }
@@ -44,8 +44,8 @@ public class CConfig {
                     file.createNewFile();
                 }
                 config = YamlConfiguration.loadConfiguration(file);
-            }catch (Exception ignored){
-                System.err.println("Error on getting config!");
+            }catch (Exception exception){
+                System.err.println("Error on getting config! "+exception.getMessage());
             }
         }
         return config;
@@ -59,8 +59,8 @@ public class CConfig {
     public void save(){
         try{
             config.save(file);
-        }catch (Exception ignored){
-            System.err.println("Failed to save config!");
+        }catch (Exception exception){
+            System.err.println("Failed to save config! "+exception.getMessage());
         }
     }
 
