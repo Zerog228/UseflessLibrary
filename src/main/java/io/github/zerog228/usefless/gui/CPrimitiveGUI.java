@@ -22,11 +22,11 @@ import java.util.Map;
 
 public abstract class CPrimitiveGUI implements InventoryHolder, Listener {
 
-    private final String UNTOUCHABLE = "untouchable_item";
+    protected static final String UNTOUCHABLE = "untouchable_item";
 
-    private final Inventory inventory;
+    protected final Inventory inventory;
     protected final Map<Integer, CPrimitiveButton> buttons = new HashMap<>();
-    private ItemStack DEF_EMPTY;
+    protected ItemStack DEF_EMPTY;
 
     public CPrimitiveGUI(FixedSize size) {
         this(size.getSize(), Component.empty());
@@ -128,7 +128,7 @@ public abstract class CPrimitiveGUI implements InventoryHolder, Listener {
     }
 
     /**Converts coordinates into slot index*/
-    public int getSlot(int x, int y){
+    public static int getSlot(int x, int y){
         return x + y * 9;
     }
 
@@ -204,12 +204,31 @@ public abstract class CPrimitiveGUI implements InventoryHolder, Listener {
     }
 
     /**
+     * Adds button to selected slot with 'untouchable' tag
+     * @param slot Slot in which button will be located
+     * @param button Button
+     * @param stack ItemStack representing button
+     * */
+    protected void addButton(int slot, CPrimitiveButton button, ItemStack stack){
+        addButton(slot, button, stack, true);
+    }
+
+    /**
      * Adds button to selected slot
      * @param slot Slot in which button will be located
      * @param button Button
      * */
     protected void addButton(int slot, CPrimitiveButton button){
         buttons.put(slot, button);
+    }
+
+    /**
+     * Adds button to selected slot
+     * @param slot Slot in which button will be located
+     * @param onClick Event that fires after button click
+     * */
+    protected void addButton(int slot, CPrimitiveButton.OnClick<InventoryClickEvent, Void> onClick){
+        buttons.put(slot, new CPrimitiveButton<>(onClick));
     }
 
     //TODO Check if 'onDrag' also cancels or not
@@ -223,7 +242,10 @@ public abstract class CPrimitiveGUI implements InventoryHolder, Listener {
     public enum FixedSize{
         X5(5),
         X9(9),
+        X18(18),
         X27(27),
+        X36(36),
+        X45(45),
         X54(54);
 
         private final int size;
@@ -234,22 +256,22 @@ public abstract class CPrimitiveGUI implements InventoryHolder, Listener {
     }
 
     /**Checks if this item is marked with untouchable tag*/
-    protected boolean hasUntouchableTag(ItemStack stack){
+    protected static boolean hasUntouchableTag(ItemStack stack){
         return stack != null && PersistentData.hasData(stack.getItemMeta(), UNTOUCHABLE);
     }
 
     /**Checks if this item is marked with untouchable tag and value of the tag*/
-    protected boolean isUntouchable(ItemStack stack){
+    protected static boolean isUntouchable(ItemStack stack){
         return hasUntouchableTag(stack) && PersistentData.getDataBo(stack.getItemMeta(), UNTOUCHABLE);
     }
 
     /**Marks item with tag and adds tag value*/
-    protected void setUntouchable(ItemStack stack, boolean untouchable){
+    protected static void setUntouchable(ItemStack stack, boolean untouchable){
         stack.setItemMeta((ItemMeta) PersistentData.setData(stack.getItemMeta(), UNTOUCHABLE, untouchable));
     }
 
     /**Removes 'untouchable' tag*/
-    protected void removeUntouchable(ItemStack stack){
+    protected static void removeUntouchable(ItemStack stack){
         stack.setItemMeta((ItemMeta) PersistentData.removeData(stack.getItemMeta(), UNTOUCHABLE));
     }
 

@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CGUI extends CPrimitiveGUI {
+public abstract class CGUI extends CPrimitiveGUI {
     protected final Map<Integer, CButton> buttons = new HashMap<>();
 
     public CGUI(FixedSize size) {
@@ -40,6 +40,16 @@ public class CGUI extends CPrimitiveGUI {
      * */
     protected void addButton(int slot, CButton button) {
         buttons.put(slot, button);
+    }
+
+    /**
+     * Adds button to selected slot with 'untouchable' tag
+     * @param slot Slot in which button will be located
+     * @param button Button
+     * @param stack ItemStack representing button
+     * */
+    protected void addButton(int slot, CButton button, ItemStack stack) {
+        addButton(slot, button, stack, true);
     }
 
     /**

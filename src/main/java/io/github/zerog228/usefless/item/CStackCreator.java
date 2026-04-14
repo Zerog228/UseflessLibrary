@@ -23,10 +23,7 @@ import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 
 public class CStackCreator {
@@ -102,6 +99,22 @@ public class CStackCreator {
 
         public Builder name(String name){
             return name(serializer.deserialize(name));
+        }
+
+        public Builder lore(Component ... lore){
+            return lore(Arrays.stream(lore).toList(), false);
+        }
+
+        public Builder lore(boolean preserve, Component ... lore){
+            return lore(Arrays.stream(lore).toList(), preserve);
+        }
+
+        public Builder lore(String ... lore){
+            return loreS(Arrays.stream(lore).toList(), false);
+        }
+
+        public Builder lore(boolean preserve, String ... lore){
+            return loreS(Arrays.stream(lore).toList(), preserve);
         }
 
         public Builder lore(List<Component> lore, boolean preserve){

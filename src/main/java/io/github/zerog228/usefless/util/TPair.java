@@ -12,6 +12,11 @@ public class TPair<L /*extends Number*/, R /*extends Number*/> {
     private L first;
     private R second;
 
+    public TPair(L left, R right){
+        this.first = left;
+        this.second = right;
+    }
+
     public static <F /*extends Number*/, S /*extends Number*/> TPair<F, S> of(F l, S r){
         return new TPair<>(l, r);
     }
@@ -22,6 +27,14 @@ public class TPair<L /*extends Number*/, R /*extends Number*/> {
 
     public TPair<L, R> setSecond(R second){
         return of(getFirst(), second);
+    }
+
+    public L getKey(){
+        return first;
+    }
+
+    public R getValue(){
+        return second;
     }
 
     /*public <F extends Number, S extends Number> NPair<Number, Number> add(F first, S second) throws Exception{
