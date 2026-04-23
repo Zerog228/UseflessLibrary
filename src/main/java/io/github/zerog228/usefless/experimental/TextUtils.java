@@ -79,4 +79,16 @@ public class TextUtils {
         }
         return components;
     }
+
+    public static float toFloat(Component component){
+        return Float.parseFloat(serializer.serialize(component));
+    }
+
+    public static float toFloat(Component component, float def){
+        try{
+            return Float.parseFloat(serializer.serialize(component));
+        }catch (Exception ignored){
+            return def;
+        }
+    }
 }

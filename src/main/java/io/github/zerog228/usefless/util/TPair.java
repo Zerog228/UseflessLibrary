@@ -22,11 +22,23 @@ public class TPair<L /*extends Number*/, R /*extends Number*/> {
     }
 
     public TPair<L, R> setFirst(L first){
-        return of(first, getSecond());
+        this.first = first;
+        return this;
     }
 
     public TPair<L, R> setSecond(R second){
-        return of(getFirst(), second);
+        this.second = second;
+        return this;
+    }
+
+    public TPair<L, R> setKey(L key){
+        this.first = key;
+        return this;
+    }
+
+    public TPair<L, R> setValue(R value){
+        this.second = value;
+        return this;
     }
 
     public L getKey(){

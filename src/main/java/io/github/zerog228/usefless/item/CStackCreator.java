@@ -1,10 +1,12 @@
 package io.github.zerog228.usefless.item;
 
+import io.github.zerog228.usefless.util.TAssignedPair;
 import io.papermc.paper.datacomponent.DataComponentType;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.*;
 import io.github.zerog228.usefless.UseflessLibrary;
 import io.github.zerog228.usefless.data.PersistentData;
+import io.papermc.paper.datacomponent.item.consumable.ItemUseAnimation;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.keys.tags.BlockTypeTagKeys;
@@ -22,6 +24,8 @@ import org.bukkit.block.BlockType;
 import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionType;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -69,12 +73,6 @@ public class CStackCreator {
 
         public ItemStack build(){
             return itemStack;
-        }
-
-        public static Builder attackRange(Builder builder, Object data){
-            //AttackRange range = AttackRange.attackRange().minReach().maxReach().minCreativeReach().maxCreativeReach().hitboxMargin().mobFactor().build();
-            //ItemStack stack = new ItemStack(Material.GLASS);
-            return builder;
         }
 
         public Builder item(ItemStack stack){
@@ -178,6 +176,88 @@ public class CStackCreator {
             return this;
         }
 
+        public Builder data(String key, int value) {
+            ItemMeta meta = itemStack.getItemMeta();
+            PersistentData.setData(meta, key, value);
+            itemStack.setItemMeta(meta);
+            return this;
+        }
+
+        public Builder data(String key, float value) {
+            ItemMeta meta = itemStack.getItemMeta();
+            PersistentData.setData(meta, key, value);
+            itemStack.setItemMeta(meta);
+            return this;
+        }
+
+        public Builder data(String key, double value) {
+            ItemMeta meta = itemStack.getItemMeta();
+            PersistentData.setData(meta, key, value);
+            itemStack.setItemMeta(meta);
+            return this;
+        }
+
+        public Builder data(String key, byte value) {
+            ItemMeta meta = itemStack.getItemMeta();
+            PersistentData.setData(meta, key, value);
+            itemStack.setItemMeta(meta);
+            return this;
+        }
+
+        public Builder data(String key, long value) {
+            ItemMeta meta = itemStack.getItemMeta();
+            PersistentData.setData(meta, key, value);
+            itemStack.setItemMeta(meta);
+            return this;
+        }
+
+        public Builder data(String key, short value) {
+            ItemMeta meta = itemStack.getItemMeta();
+            PersistentData.setData(meta, key, value);
+            itemStack.setItemMeta(meta);
+            return this;
+        }
+
+        public Builder data(TAssignedPair<?> ... values) {
+            ItemMeta meta = itemStack.getItemMeta();
+            for(TAssignedPair<?> pair : values){
+                Object value = pair.getValue();
+                if(value instanceof Integer integer){
+                    PersistentData.setData(meta, pair.getKey(), integer);
+                    continue;
+                }
+                if(value instanceof String string){
+                    PersistentData.setData(meta, pair.getKey(), string);
+                    continue;
+                }
+                if(value instanceof Double dbl){
+                    PersistentData.setData(meta, pair.getKey(), dbl);
+                    continue;
+                }
+                if(value instanceof Float flt){
+                    PersistentData.setData(meta, pair.getKey(), flt);
+                    continue;
+                }
+                if(value instanceof Boolean bool){
+                    PersistentData.setData(meta, pair.getKey(), bool);
+                    continue;
+                }
+                if(value instanceof Short shrt){
+                    PersistentData.setData(meta, pair.getKey(), shrt);
+                    continue;
+                }
+                if(value instanceof Long lng){
+                    PersistentData.setData(meta, pair.getKey(), lng);
+                    continue;
+                }
+                if(value instanceof Byte bt){
+                    PersistentData.setData(meta, pair.getKey(), bt);
+                }
+            }
+            itemStack.setItemMeta(meta);
+            return this;
+        }
+
         public Builder customModelData(String model){
             itemStack.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addString(model).build());
             return this;
@@ -232,6 +312,54 @@ public class CStackCreator {
             return this;
         }
 
+        public Builder consumable(float consume_seconds){
+            itemStack.setData(DataComponentTypes.CONSUMABLE, Consumable.consumable().consumeSeconds(consume_seconds).animation(ItemUseAnimation.NONE).build());
+            return this;
+        }
+
+        public Builder consumable(Consumable consumable){
+            itemStack.setData(DataComponentTypes.CONSUMABLE, consumable);
+            return this;
+        }
+
+        public Builder food(){
+            itemStack.setData(DataComponentTypes.FOOD, FoodProperties.food().build());
+            return this;
+        }
+
+        public Builder food(boolean can_always_eat){
+            itemStack.setData(DataComponentTypes.FOOD, FoodProperties.food().canAlwaysEat(can_always_eat).build());
+            return this;
+        }
+
+        public Builder food(FoodProperties properties){
+            itemStack.setData(DataComponentTypes.FOOD, properties);
+            return this;
+        }
+
+        /**
+         * @param duration Duration in ticks
+         * */
+        public Builder swingAnimation(SwingAnimation.Animation animation, int duration){
+            itemStack.setData(DataComponentTypes.SWING_ANIMATION, SwingAnimation.swingAnimation().type(animation).duration(duration).build());
+            return this;
+        }
+
+        public Builder potion(PotionContents potionContents){
+            itemStack.setData(DataComponentTypes.POTION_CONTENTS, potionContents);
+            return this;
+        }
+
+        public Builder potion(PotionType type, String name, Color color, PotionEffect ... effects){
+            itemStack.setData(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents().potion(type).customName(name).customColor(color).addCustomEffects(Arrays.stream(effects).toList()).build());
+            return this;
+        }
+
+        public Builder potion(PotionType type, Color color, PotionEffect ... effects){
+            itemStack.setData(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents().potion(type).customColor(color).addCustomEffects(Arrays.stream(effects).toList()).build());
+            return this;
+        }
+
         public Builder remove(DataComponentType dataComponentType){
             itemStack.unsetData(dataComponentType);
             return this;
@@ -271,7 +399,7 @@ public class CStackCreator {
     }
 
     private void initInstructions(){
-        instructions.put("minecraft:attack_range", Builder::attackRange);
+        //instructions.put("minecraft:attack_range", Builder::attackRange);
         /*instructions.put("minecraft:attribute_modifiers", (builder, object) -> {
 
         });
