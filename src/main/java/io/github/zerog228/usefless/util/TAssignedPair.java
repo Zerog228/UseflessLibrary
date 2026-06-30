@@ -1,11 +1,9 @@
 package io.github.zerog228.usefless.util;
 
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Builder
 @Getter
 @Setter
 public class TAssignedPair<V> extends TPair<String, V> {
