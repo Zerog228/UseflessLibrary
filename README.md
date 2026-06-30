@@ -56,7 +56,7 @@ public class CustomItemRegistries {
     public static CItem customItem;
 
     public static void register(){
-        undoButtonItem = new CustomItem("custom_item"); //For now it will glow red because we haven't added custom item yet
+        customItem = new CustomItem("custom_item"); //For now it will glow red because we haven't added custom item yet
     }
 }
 ```
