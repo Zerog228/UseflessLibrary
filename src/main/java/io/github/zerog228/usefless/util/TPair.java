@@ -21,6 +21,10 @@ public class TPair<L /*extends Number*/, R /*extends Number*/> {
         return new TPair<>(l, r);
     }
 
+    public static <F, S> TPair<F, S> pair(F l, S r){
+        return new TPair<>(l, r);
+    }
+
     public TPair<L, R> setFirst(L first){
         this.first = first;
         return this;

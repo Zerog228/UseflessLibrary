@@ -25,7 +25,6 @@ public abstract class CBasicItem implements ICItem {
         CStackCreator.Builder.customModelData(stack, itemKey);
         stack.setItemMeta((ItemMeta) PersistentData.setData(stack.getItemMeta(), CITEM_TAG, itemKey));
 
-        initRecipe();
         this.namespacedKey = new NamespacedKey(UseflessLibrary.getPlugin(), itemKey);
         CItemUtils.addItem(this);
     }
@@ -36,7 +35,6 @@ public abstract class CBasicItem implements ICItem {
     }
 
     public abstract ItemStack initItem(String itemKey);
-    public abstract void initRecipe();
     public ItemStack getItem(){
         return stack;
     };

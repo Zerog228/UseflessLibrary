@@ -1,6 +1,5 @@
 package io.github.zerog228.usefless.util;
 
-
 import lombok.Getter;
 import lombok.Setter;
 

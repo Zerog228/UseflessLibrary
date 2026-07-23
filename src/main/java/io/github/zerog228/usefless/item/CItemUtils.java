@@ -30,9 +30,6 @@ public class CItemUtils {
             public ItemStack initItem(String itemKey) {
                 return itemStack;
             }
-
-            @Override
-            public void initRecipe() {}
         };
     }
 
@@ -42,9 +39,6 @@ public class CItemUtils {
             public ItemStack initItem(String itemKey) {
                 return itemStack;
             }
-
-            @Override
-            public void initRecipe() {}
         };
     }
 }
