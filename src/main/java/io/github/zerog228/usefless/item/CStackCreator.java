@@ -1,5 +1,6 @@
 package io.github.zerog228.usefless.item;
 
+import io.github.zerog228.usefless.annotations.JConvert;
 import io.github.zerog228.usefless.util.TAssignedPair;
 import io.papermc.paper.datacomponent.DataComponentType;
 import io.papermc.paper.datacomponent.DataComponentTypes;
@@ -90,11 +91,23 @@ public class CStackCreator {
             return this;
         }
 
+        @JConvert(key = "material")
+        public Builder material(String material){
+            try{
+                itemStack = new ItemStack(Material.getMaterial(material));
+            }catch (Exception ignored){
+                itemStack = new ItemStack(Material.STONE);
+            }
+
+            return this;
+        }
+
         public Builder name(Component name){
             itemStack.setData(DataComponentTypes.ITEM_NAME, name);
             return this;
         }
 
+        @JConvert(key = "name")
         public Builder name(String name){
             return name(serializer.deserialize(name));
         }
@@ -107,6 +120,7 @@ public class CStackCreator {
             return lore(Arrays.stream(lore).toList(), preserve);
         }
 
+        @JConvert(key = "lore")
         public Builder lore(String ... lore){
             return loreS(Arrays.stream(lore).toList(), false);
         }

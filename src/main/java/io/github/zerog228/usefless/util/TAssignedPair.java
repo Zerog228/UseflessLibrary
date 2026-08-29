@@ -36,4 +36,10 @@ public class TAssignedPair<V> extends TPair<String, V> {
         this.value = value;
         return this;
     }
+
+    public TAssignedPair<V> set(String key, V value){
+        this.key = key;
+        this.value = value;
+        return this;
+    }
 }

@@ -45,6 +45,12 @@ public class TPair<L /*extends Number*/, R /*extends Number*/> {
         return this;
     }
 
+    public TPair<L, R> set(L first, R second){
+        this.first = first;
+        this.second = second;
+        return this;
+    }
+
     public L getKey(){
         return first;
     }

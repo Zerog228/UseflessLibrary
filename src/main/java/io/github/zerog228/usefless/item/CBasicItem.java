@@ -10,10 +10,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 //TODO Override ItemStack class (Override and pass needed methods, constructors etc.)
-public abstract class CBasicItem implements ICItem {
+public abstract class CBasicItem implements ICItem, IVersionable {
     @Getter
     public final NamespacedKey namespacedKey;
     public final ItemStack stack;
+    @Getter
+    protected final int version = 0;
 
     /**
      * Creates custom item with defined item key
@@ -24,6 +26,7 @@ public abstract class CBasicItem implements ICItem {
         //Set model data and tag
         CStackCreator.Builder.customModelData(stack, itemKey);
         stack.setItemMeta((ItemMeta) PersistentData.setData(stack.getItemMeta(), CITEM_TAG, itemKey));
+        stack.setItemMeta((ItemMeta) PersistentData.setData(stack.getItemMeta(), IVERSION_TAG, version));
 
         this.namespacedKey = new NamespacedKey(UseflessLibrary.getPlugin(), itemKey);
         CItemUtils.addItem(this);

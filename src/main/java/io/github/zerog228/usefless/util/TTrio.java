@@ -42,5 +42,10 @@ public class TTrio<F, S, T> {
         return this;
     }
 
-
+    public TTrio<F, S, T> set(F first, S second, T third){
+        this.first = first;
+        this.second = second;
+        this.third = third;
+        return this;
+    }
 }

@@ -78,9 +78,6 @@ public class CustomItem extends CItem {
                 .build();
     }
 
-    @Override
-    public void initRecipe() {}
-
     //Event handler for our test item
     @EventHandler
     public void onClick(PlayerInteractEvent e){
